@@ -1,0 +1,90 @@
+<header class="top-navbar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <img src="/images/logo.png" alt="" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-host" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbars-host">
+                <ul class="nav navbar-nav navbar-right mx-auto p-3">
+                    <!-- SEARCH MODAL BUTTON -->
+                    <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#searchModal">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                        </svg>
+                    </button>
+
+                    <!-- SEARCH MODAL -->
+                    
+                    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content bg-secondary">
+                            <div class="modal-header">
+                              <h1 class="modal-title fs-3 text-warning" id="searchModalLabel">Modal title</h1>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/search" method="POST" class="d-flex" role="search">
+                                    <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-outline-warning">Search</button>
+                                </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item <%= page_name === 'index' && 'active'  %>"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item <%= page_name === 'about' && 'active'  %>"><a class="nav-link" href="/about">About Us</a></li>
+                    <li class="nav-item dropdown <%= page_name === 'courses' && 'active'  %>">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Course </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown-a">
+                            <a class="dropdown-item" href="/courses">Courses </a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Blog </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown-a">
+                            <a class="dropdown-item" href="/blogs">Blog </a>
+                            <% if(userIN){  %>
+                                <a class="dropdown-item" href="/users/dashboard">Blog Ekle</a>
+                            <% } %>
+                        </div>
+                    </li>
+                    <li class="nav-item <%= page_name === 'contact' && 'active'  %>"><a class="nav-link" href="/contact">Contact</a></li>
+                    <% if(userIN){ %>
+                    <li class="nav-item <%= page_name === 'dashboard' && 'active'  %>"><a class="nav-link" href="/users/dashboard">Dashboard</a></li>
+                    <% } %>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <% if (!userIN) { %>
+                    <li><a class="hover-btn-new log orange" href="#" data-toggle="modal" data-target="#login"><span>Book Now</span></a></li>
+                    <% } %>
+                </ul>
+
+                
+
+                <ul class="nav navbar-nav navbar-right">
+                    <% if (userIN) { %>
+                        <li><a class="hover-btn-new log orange" href="/users/logout"><span>Log Out</span></a></li>
+                    <% } %>
+                </ul>
+                
+                <!-- 
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                -->
+            </div>
+        </div>
+    </nav>
+</header>

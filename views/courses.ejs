@@ -1,0 +1,108 @@
+<%- include('partials/_header') -%>
+
+    <!-- Start header -->
+    <%- include('partials/_navbar') -%>
+	<!-- End header -->
+	
+	<div class="all-title-box">
+		<div class="container text-center">
+			<h1>Course Grid 2<span class="m_1">Lorem Ipsum dolroin gravida nibh vel velit.</span></h1>
+		</div>
+	</div>
+	
+    <div id="overviews" class="section wb">
+        <div class="container">
+            <div class="section-title row text-center">
+                <div class="col-md-8 offset-md-2">
+                    <p class="lead">Lorem Ipsum dolroin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem!</p>
+                </div>
+            </div><!-- end title -->
+
+            <div class="row">
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-warning" type="submit">Search</button>
+                  </form>
+            </div>
+            <hr class="invis"> 
+            <div class="row">
+                <div class="justify-content-center btn-group btn-group-lg" role="group" aria-label="Large button group">
+                    <button type="button" class="btn btn-outline-warning <%= categorys ? '' : 'active' %>"><a href="/courses" class="text-secondary">All Courses</a></button>
+                    <% categories.forEach (category => { %>
+                        <button type="button" class="btn btn-outline-warning <%= categorys && categorys.slug === category.slug ? 'active' : '' %> "><a href="/courses?categories=<%- category.slug %>" class="text-secondary"><%- category.name %></a></button>
+                    <% }) %>
+                  </div>
+            </div>
+            <div class="row">
+                <% if(typeof alertMessage !== 'undefined') { %>
+
+                <div class="alert alert-warning mx-auto mt-5">
+                    <%= alertMessage %>
+                </div>
+                <% } else { %>
+                
+                <% courses.forEach(course => { %>
+                  <div class="col-lg-3 col-md-3 col-6">
+                    <div class="course-item mt-5">
+                      <div class="image-blog">
+                        <img src="images/blog_1.jpg" alt="" class="img-fluid">
+                      </div>
+                      <div class="course-br">
+                        <div class="course-title">
+                          <h2><a href="/courses/<%= course.slug %>" title=""><%- course.name %></a></h2>
+                        </div>
+                        <div class="course-desc">
+                          <p><%- course.description.substring(1,100) %>...</p>
+                        </div>
+                        <div class="course-rating">
+                          4.5
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star-half"></i>
+                        </div>
+                      </div>
+                      <div class="course-meta-bot">
+                        <ul>
+                          <li><i class="fa fa-calendar" aria-hidden="true"></i>  <%= course.createdAt.toLocaleDateString('tr-TR') %></li>
+                          <li><i class="fa fa-users" aria-hidden="true"></i> <%= course.employees.length %> Student</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div><!-- end col -->
+                <% }); %>
+
+                <% } %>
+            </div><!-- end row -->
+              
+			
+        </div><!-- end container -->
+    </div><!-- end section -->
+
+    <div class="parallax section dbcolor">
+        <div class="container">
+            <div class="row logos">
+                <div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">
+                    <a href="#"><img src="images/logo_01.png" alt="" class="img-repsonsive"></a>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">
+                    <a href="#"><img src="images/logo_02.png" alt="" class="img-repsonsive"></a>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">
+                    <a href="#"><img src="images/logo_03.png" alt="" class="img-repsonsive"></a>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">
+                    <a href="#"><img src="images/logo_04.png" alt="" class="img-repsonsive"></a>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">
+                    <a href="#"><img src="images/logo_05.png" alt="" class="img-repsonsive"></a>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">
+                    <a href="#"><img src="images/logo_06.png" alt="" class="img-repsonsive"></a>
+                </div>
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end section -->
+
+<%-include('partials/_footer')-%>

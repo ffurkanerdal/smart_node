@@ -1,0 +1,649 @@
+<%- include('partials/_header'); %>
+
+<%- include('partials/_navbar'); %>
+
+    <% if(user){ %>
+
+		<% if(user.role === 'student'){ %>
+
+ 
+			<div class="all-title-box">
+				<div class="container text-center">
+					<h1><%= user.name %><span class="m_1"><%= user.role %></span></h1>
+				</div>
+			</div>
+
+			<div id="overviews" class="section wb">
+				<div class="container">
+					<div class="row">
+
+
+						<div class="col-lg-12 text-center">
+							<button class="btn btn-outline-warning rounded-0 text-secondary" data-toggle="modal" data-target="#addBlog">Add New Blog</button>
+						</div>
+
+						<div class="col-lg-12 blog-post-single">					
+							<div class="blog-author">
+								<div class="author-bio">
+									<h3 class="author_name"><a href="#">Tom Jobs</a></h3>
+									<h5>CEO at <a href="#">SmartEDU</a></h5>
+									<p class="author_det">
+										Lorem ipsum dolor sit amet, consectetur adip, sed do eiusmod tempor incididunt  ut aut reiciendise voluptat maiores alias consequaturs aut perferendis doloribus omnis saperet docendi nec, eos ea alii molestiae aliquand.
+									</p>
+								</div>
+								<div class="author-desc">
+									<img src="images/author.jpg" alt="about author">
+								</div>
+							</div>
+
+						</div><!-- end col -->
+					</div><!-- end row -->
+					<div class="row mt-5"> 
+						<div class="col-lg-6 col-md-6 col-12">
+							<div class="text-center"><h1><%= user.name.toUpperCase() %>'S COURSES</h1></div>
+							<% user.courses.forEach(course => { %>
+							<div class="course-item mb-5">
+								<div class="image-blog">
+									<img src="/images/blog_1.jpg" alt="" class="img-fluid">
+								</div>
+								<div class="course-br">
+									<div class="course-title">
+										<h2><a href="/courses/<%= course.slug %>" title=""><%= course.name %></a></h2>
+									</div>
+									<div class="course-desc">
+										<p><%= course.description %></p>
+									</div>
+									<div class="text-center">
+										<div class="course-meta-bot ">
+											<ul>
+												<li><i class="fa fa-calendar" aria-hidden="true"></i> <%= course.createdAt.toLocaleDateString('tr-TR') %></li>
+												<li><i class="fa fa-users" aria-hidden="true"></i> <%= course.employees.length %> Student</li>
+											</ul>
+											<div class="py-2">
+												<form method="POST" action="/courses/release">
+													<input type="hidden" name="course_id" value="<%- course._id %>" id="">
+													<button class="btn btn-m btn-outline-danger text-dark"><span>RELEASE</span></button>
+												</form>
+											</div>
+										  </div>
+									</div>
+								</div>
+								
+							</div>
+							<% }); %>
+						</div><!-- end col -->
+					</div><!-- end row -->
+
+					<div class="row mt-5"> 
+						<div class="col-lg-6 col-md-6 col-12">
+							<div class="text-center"><h1><%= user.name.toUpperCase() %>'S BLOGS</h1></div>
+							<% blogs.forEach(blog => { %>
+							<div class="course-item mb-5">
+								<div class="image-blog">
+									<img src="/images/blog_1.jpg" alt="" class="img-fluid">
+								</div>
+								<div class="course-br">
+									<div class="course-title">
+										<h2><a href="/courses/<%= blog.slug %>" title=""><%= blog.name %></a></h2>
+									</div>
+									<div class="course-desc">
+										<p><%= blog.description %></p>
+									</div>
+									<div class="text-center">
+										<div class="course-meta-bot ">
+											<ul>
+												<li><i class="fa fa-calendar" aria-hidden="true"></i> <%= course.createdAt.toLocaleDateString('tr-TR') %></li>
+												<!-- <li><i class="fa fa-users" aria-hidden="true"></i> <%= course.employees.length %> Student</li> -->
+											</ul>
+											<!-- <div class="py-2">
+												<form method="POST" action="/courses/release">
+													<input type="hidden" name="course_id" value="<%- course._id %>" id="">
+													<button class="btn btn-m btn-outline-danger text-dark"><span>RELEASE</span></button>
+												</form>
+											</div> -->
+										  </div>
+									</div>
+								</div>
+								
+							</div>
+							<% }); %>
+						</div><!-- end col -->
+					</div><!-- end row -->
+				</div><!-- end container -->
+			</div><!-- end section -->
+
+
+			<!-- ADD MODAL -->
+			<div class="modal fade" id="addBlog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-body customer-box">
+							<!-- Tab Panes -->
+							<div class="tab-content">
+								<div class="tab-pane active" id="login">
+									<form role="form" method="POST" action="/blogs " class="form-horizontal">
+										<div class="form-group">
+											<div class="col-sm-12">
+												<input type="text" name="name" class="form-control" placeholder="Blog Name" id="" required>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-sm-12">
+												<input type="text" name="description" class="form-control" placeholder="Blog Description" id="" required>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<div class="col-sm-12">
+												<textarea name="text" id="" cols="50" rows="10" class="form-control" placeholder="text" required></textarea>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<div class="col-sm-12">
+												<input type="hidden" name="role" class="form-control" value="<%= user.role %>" id="" required>
+											</div>
+										</div> 	
+
+
+										<div class="form-group">
+											<div class="col-sm-12">
+												<select class="form-control" name="category" required>
+													<option value="None">None</option>
+													<% categories.forEach(category => {%>
+													<option value="<%= category._id %>"><%= category.name %></option>
+													<% });  %>
+												</select>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-sm-5 text-center">
+												<button type="submit" class="btn btn-light btn-radius btn-brd grd1">Submit</button>
+											</div>
+											<div class="col-sm-5 text-center">
+												<button type="submit" class="btn btn-light btn-radius btn-brd grd1" data-dismiss="modal" aria-hidden="true">Cancel</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		<% } else if (user.role === 'teacher') {%>
+
+			<div class="all-title-box">
+				<div class="container text-center">
+					<h1><%= user.name %><span class="m_1"><%= user.role %></span></h1>
+				</div>
+			</div>
+
+			<div id="overviews" class="section wb">
+				<div class="container">
+					<div class="row"> 
+					<!-- Modal Button -->
+						<div class="row">
+							<div class="col-lg-6 text-center">
+								<button class="btn btn-outline-warning rounded-0 text-secondary" data-toggle="modal" data-target="#addBlog">Add New Blog</button>
+							</div>
+							<div class="col-lg-6 text-center">
+								<button class="btn btn-outline-warning rounded-0 text-secondary" data-toggle="modal" data-target="#addCourse">Add New Course</button>
+							</div>
+						</div>
+
+						<div class="col-lg-12 blog-post-single">					
+							<div class="blog-author">
+								<div class="author-bio">
+									<h3 class="author_name"><a href="#">Tom Jobs</a></h3>
+									<h5>CEO at <a href="#">SmartEDU</a></h5>
+									<p class="author_det">
+										Lorem ipsum dolor sit amet, consectetur adip, sed do eiusmod tempor incididunt  ut aut reiciendise voluptat maiores alias consequaturs aut perferendis doloribus omnis saperet docendi nec, eos ea alii molestiae aliquand.
+									</p>
+								</div>
+								<div class="author-desc">
+									<img src="/images/author.jpg" alt="about author">
+								</div>
+							</div>
+
+						</div><!-- end col -->
+					</div><!-- end row -->
+					<div class="row mt-5"> 
+						<div class="col-lg-6 col-md-6 col-12">
+							<div class="course-item mb-5">
+								<div class="image-blog">
+									<img src="images/blog_1.jpg" alt="" class="img-fluid">
+								</div>
+								<div class="course-br">
+									<div class="course-title">
+										<h2><a href="course-single.html" title="">Engineering</a></h2>
+									</div>
+									<div class="course-desc">
+										<p>Lorem ipsum door sit amet, fugiat deicata avise id cum, no quo maiorum intel ogrets geuiat operts elicata libere avisse id cumlegebat, liber regione eu sit.... </p>
+									</div>
+								</div>
+							</div>
+						</div><!-- end col -->
+
+						<div class="col-lg-6 col-md-6 col-12">
+							<div class="course-item mb-5">
+								<div class="image-blog">
+									<img src="images/blog_2.jpg" alt="" class="img-fluid">
+								</div>
+								<div class="course-br">
+									<div class="course-title">
+										<h2><a href="course-single.html" title="">Hotel Management</a></h2>
+									</div>
+									<div class="blog-desc">
+										<p>Lorem ipsum door sit amet, fugiat deicata avise id cum, no quo maiorum intel ogrets geuiat operts elicata libere avisse id cumlegebat, liber regione eu sit.... </p>
+									</div>
+								</div>
+							</div>
+						</div><!-- end col -->	
+										<div class="col-lg-6 col-md-6 col-12">
+							<div class="course-item mb-5">
+								<div class="image-blog">
+									<img src="images/blog_2.jpg" alt="" class="img-fluid">
+								</div>
+								<div class="course-br">
+									<div class="course-title">
+										<h2><a href="course-single.html" title="">Hotel Management</a></h2>
+									</div>
+									<div class="blog-desc">
+										<p>Lorem ipsum door sit amet, fugiat deicata avise id cum, no quo maiorum intel ogrets geuiat operts elicata libere avisse id cumlegebat, liber regione eu sit.... </p>
+									</div>
+								</div>
+							</div>
+						</div><!-- end col -->	
+						<div class="col-lg-6 col-md-6 col-12">
+							<div class="course-item mb-5">
+								<div class="image-blog">
+									<img src="images/blog_2.jpg" alt="" class="img-fluid">
+								</div>
+								<div class="course-br">
+									<div class="course-title">
+										<h2><a href="course-single.html" title="">Hotel Management</a></h2>
+									</div>
+									<div class="blog-desc">
+										<p>Lorem ipsum door sit amet, fugiat deicata avise id cum, no quo maiorum intel ogrets geuiat operts elicata libere avisse id cumlegebat, liber regione eu sit.... </p>
+									</div>
+								</div>
+							</div>
+						</div><!-- end col -->	
+					</div><!-- end row -->
+				</div><!-- end container -->
+			</div><!-- end section -->
+
+			<div class="container">
+				<div class="col-sm-10">
+					<h1 class="text-center"><%= courses ?  `${user.name} Courses` : '' %></h1>
+					<div class="row">
+						<% courses.forEach(course => { %>
+							<div class="col-lg-4 col-md-4 col-6">
+							  <div class="course-item mt-5">
+								<div class="image-blog">
+								  <img src="/images/blog_1.jpg" alt="" class="img-fluid">
+								</div>
+								<div class="course-br">
+								  <div class="course-title">
+									<h2><a href="/courses/<%= course.slug %>" title=""><%- course.name %></a></h2>
+								  </div>
+								  <div class="course-desc">
+									<p><%- course.description %></p>
+								  </div>
+								  <div class="course-rating">
+									4.5
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star-half"></i>
+								  </div>
+
+								</div>
+								<div class="course-meta-bot">
+								  <ul>
+									<li><i class="fa fa-calendar" aria-hidden="true"></i> <%- course.createdAt.toLocaleDateString('tr-TR') %></li>
+									<li><i class="fa fa-users" aria-hidden="true"></i> <%= course.employees.length %> Student</li>
+									<li class="py-3">
+										<div class="row">
+											<div class="col-6">
+													<button type="submit" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+														Update
+													</button>
+											</div>
+											<div class="col-6">
+												<form action="/courses/remove" method="POST">
+													<input type="hidden" value="<%= course._id %>" name="courseID" id="">
+													<button type="submit" class="btn btn-outline-danger">Remove</button>
+												</form>
+											</div>
+										</div>
+									</li>
+								  </ul>
+								</div>
+							  </div>
+							</div><!-- end col -->
+								<!-- Modal Update -->
+								<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+									<div class="modal-dialog">
+									<form action="/courses/update" method="POST">
+										<div class="modal-content">
+											<div class="modal-header">
+											<h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+											</div>
+											<div class="modal-body">
+												<input type="hidden" value="<%= course._id %>" name="courseID" id="">												
+												<input class="form-control" type="text" name="name" value="<%- course.name %>" id="">
+												<input class="form-control" type="text" name="description" value="<%- course.description %>" id="">
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+												<button type="submit" class="btn btn-outline-warning">Save changes</button>
+											</div>
+									</form>
+
+									</div>
+									</div>
+								</div>
+						<% }); %>
+
+						<div class="row mt-5"> 
+						<div class="col-lg-6 col-md-6 col-12">
+							<div class="text-center"><h1><%= user.name.toUpperCase() %>'S BLOGS</h1></div>
+							<% blogs.forEach(blog => { %>
+							<div class="course-item mb-5">
+								<div class="image-blog">
+									<img src="/images/blog_1.jpg" alt="" class="img-fluid">
+								</div>
+								<div class="course-br">
+									<div class="course-title">
+										<h2><a href="/courses/<%= blog.slug %>" title=""><%= blog.name %></a></h2>
+									</div>
+									<div class="course-desc">
+										<p><%= blog.description %></p>
+									</div>
+									<div class="text-center">
+										<div class="course-meta-bot ">
+											<ul>
+											</ul>
+										  </div>
+									</div>
+								</div>
+								
+							</div>
+							<% }); %>
+						</div><!-- end col -->
+					</div><!-- end row -->
+
+
+					<div class="row mt-5"> 
+						<div class="col-lg-6 col-md-6 col-12">
+							<div class="text-center"><h1><%= user.name.toUpperCase() %>'S BLOGS</h1></div>
+							<% blogs.forEach(blog => { %>
+							<div class="course-item mb-5">
+								<div class="image-blog">
+									<img src="/images/blog_1.jpg" alt="" class="img-fluid">
+								</div>
+								<div class="course-br">
+									<div class="course-title">
+										<h2><a href="/courses/<%= blog.slug %>" title=""><%= blog.name %></a></h2>
+									</div>
+									<div class="course-desc">
+										<p><%= blog.description %></p>
+									</div>
+									<div class="text-center">
+										<div class="course-meta-bot ">
+											</div>
+									</div>
+								</div>
+								
+							</div>
+							<% }); %>
+						</div><!-- end col -->
+					</div><!-- end row -->
+
+			
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			  <!-- Add Modal -->
+			
+			  <div class="modal fade" id="addCourse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-body customer-box">
+							<!-- Tab Panes -->
+							<div class="tab-content">
+								<div class="tab-pane active" id="login">
+									<form role="form" method="POST" action="/courses " class="form-horizontal">
+										<div class="form-group">
+											<div class="col-sm-12">
+												<input type="text" name="name" class="form-control" placeholder="Course Name" id="" required>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<div class="col-sm-12">
+												<input type="hidden" name="role" class="form-control" value="<%= user.role %>" id="" required>
+											</div>
+										</div> 	
+
+										<div class="form-group">
+											<div class="col-sm-12">
+												<textarea name="description" id="" cols="30" rows="10" class="form-control" placeholder="Description" required></textarea>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<div class="col-sm-12">
+												<select class="form-control" name="category" required>
+													<option value="None">None</option>
+													<% categories.forEach(category => {%>
+													<option value="<%= category._id %>"><%= category.name %></option>
+													<% });  %>
+												</select>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-sm-5 text-center">
+												<button type="submit" class="btn btn-light btn-radius btn-brd grd1">Submit</button>
+											</div>
+											<div class="col-sm-5 text-center">
+												<button type="submit" class="btn btn-light btn-radius btn-brd grd1" data-dismiss="modal" aria-hidden="true">Cancel</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ADD MODAL -->
+			<div class="modal fade" id="addBlog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-body customer-box">
+							<!-- Tab Panes -->
+							<div class="tab-content">
+								<div class="tab-pane active" id="login">
+									<form role="form" method="POST" action="/blogs " class="form-horizontal">
+										<div class="form-group">
+											<div class="col-sm-12">
+												<input type="text" name="name" class="form-control" placeholder="Blog Name" id="" required>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-sm-12">
+												<input type="text" name="description" class="form-control" placeholder="Blog Description" id="" required>
+											</div>
+										</div>
+										
+
+										<div class="form-group">
+											<div class="col-sm-12">
+												<textarea name="text" id="" cols="50" rows="10" class="form-control" placeholder="text" required></textarea>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<div class="col-sm-12">
+												<input type="hidden" name="role" class="form-control" value="<%= user.role %>" id="" required>
+											</div>
+										</div> 	
+
+
+										<div class="form-group">
+											<div class="col-sm-12">
+												<select class="form-control" name="category" required>
+													<option value="None">None</option>
+													<% categories.forEach(category => {%>
+													<option value="<%= category._id %>"><%= category.name %></option>
+													<% });  %>
+												</select>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-sm-5 text-center">
+												<button type="submit" class="btn btn-light btn-radius btn-brd grd1">Submit</button>
+											</div>
+											<div class="col-sm-5 text-center">
+												<button type="submit" class="btn btn-light btn-radius btn-brd grd1" data-dismiss="modal" aria-hidden="true">Cancel</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			
+			
+
+		<% } else if (user.role === 'admin') { %>
+
+			<div class="container">
+				<div class="col-12 p-4">
+					<div class="accordion" id="accordionExample">
+						<div class="accordion-item">
+						  <h2 class="accordion-header">
+							<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+							  User Settings
+							</button>
+						  </h2>
+						  <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+							<div class="accordion-body" style="overflow-y: auto; height: 300px;">
+								<% users.forEach((duser, index) => { %>
+									<div class="col-12 text-center">
+										<div class="list-group">
+											<div class="row">
+												<div class="col-10 p-3">
+													<div class="row">
+														<a href="#" class="list-group-item list-group-item-action" aria-current="true" data-bs-toggle="modal" data-bs-target="#exampleModal<%- index %>">
+															<%- duser.email %>
+														</a>
+													</div>
+												</div>
+												<div class="col-2 p-3">
+													<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal<%- index %>">
+														SHOW DETAIL
+													</button>
+								
+													<!-- Modal -->
+													<div class="modal fade" id="exampleModal<%- index %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+														<div class="modal-dialog">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+																	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+																</div>
+																<div class="modal-body">
+																	<h5>Name : <%- duser.name %></h5>
+																	<h5>Surname : <%- duser.surname %></h5>
+																	<h5>Phone : <%- duser.phone %></h5>
+																	<h5>Mail : <%- duser.email %></h5>
+																</div>
+																<div class="modal-footer">
+																	<form action="/admin/remove" method="POST">
+																		<input type="hidden" name="user_data" value="<%- duser._id %>" id="">
+																		<button type="button" class="btn btn-outline-warning" data-bs-dismiss="modal">Close</button>
+																		<button type="submit" class="btn btn-outline-danger">Remove User</button>
+																	</form>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								<% }); %>
+							</div>
+						  </div>
+						</div>
+						<div class="accordion-item">
+						  <h2 class="accordion-header">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+							  Category Settings
+							</button>
+						  </h2>
+						  <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								<h5>Categories</h5>
+								<ul class="list-group" style="overflow-y: auto; height: 200px;">
+									<% categories.forEach(category => { %>
+										<form action="/admin/remove-category" method="POST">
+											<li class="list-group-item d-flex">
+												<a href="/courses?categories=<%- category.slug %>"><%- category.name %></a>
+												<input type="hidden" value="<%- category._id %>" name="cate_id" id="">
+												<button type="submit" class="btn btn-outline-danger ms-auto">remove</button>
+											</li>
+										</form>
+									<% }); %>
+								</ul>
+
+									<form action="/admin/append-category" method="POST">
+										<div class="row">
+											<input class="form-control" type="text" name="category_name" placeholder="Please Enter Category Name" id="">
+											<button class="btn btn-outline-primary ms-auto" type="submit">Create</button>
+										</div>
+									</form>
+							</div>
+						  </div>
+						</div>
+						<div class="accordion-item">
+						  <h2 class="accordion-header">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+							  Accordion Item #3
+							</button>
+						  </h2>
+						  <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+							  <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+							</div>
+						  </div>
+						</div>
+					  </div>
+				</div>
+			</div>
+
+
+			
+			
+
+		<% } %>
+    
+    <% } %>
+	<%- include('partials/_footer'); %>
